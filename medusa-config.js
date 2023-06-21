@@ -23,15 +23,15 @@ try {
 
 // CORS when consuming Medusa from admin
 const ADMIN_CORS =
-  process.env.ADMIN_CORS || "http://localhost:7000,http://localhost:7001";
+  process.env.ADMIN_CORS || "http://localhost:7000,http://localhost:7001,https://admin.streampay.store";
 
 // CORS to avoid issues when consuming Medusa from a client
-const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000";
+const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000,https://streampay.store";
 
-const DATABASE_URL =
-  process.env.DATABASE_URL || "postgres://localhost/medusa-store";
+const DATABASE_URL = 
+  process.env.DATABASE_URL || "postgres://enonthqqzvbhvr:dfedf551af72fc1177752586756fdbc1550755872d6ee5c15fa6a68d2dfc4369@ec2-34-242-199-141.eu-west-1.compute.amazonaws.com:5432/d28br80p45qbge";
 
-const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
+const REDIS_URL = process.env.REDIS_URL || "redis://default:JXxWvP1twsaS3LleLUubr48my3Ke2hBE7IX5cdvULQeTNsbrq8uCWjxQlzuYSda7@6qcck4.stackhero-network.com:6379";
 
 const plugins = [
   `medusa-fulfillment-manual`,
@@ -43,13 +43,13 @@ const plugins = [
     },
   },
   // To enable the admin plugin, uncomment the following lines and run `yarn add @medusajs/admin`
-  // {
-  //   resolve: "@medusajs/admin",
-  //   /** @type {import('@medusajs/admin').PluginOptions} */
-  //   options: {
-  //     autoRebuild: true,
-  //   },
-  // },
+   {
+     resolve: "@medusajs/admin",
+     /** @type {import('@medusajs/admin').PluginOptions} */
+     options: {
+       autoRebuild: true,
+     },
+   },
 ];
 
 const modules = {
@@ -80,7 +80,17 @@ const projectConfig = {
 
 /** @type {import('@medusajs/medusa').ConfigModule} */
 module.exports = {
-  projectConfig,
+  projectConfig: {
+    redis_url: REDIS_URL,
+    database_url: DATABASE_URL,
+    database_type: "postgres",
+    store_cors: STORE_CORS,
+    admin_cors: ADMIN_CORS,
+    database_extra:
+      process.env.NODE_ENV !== "development"
+        ? { ssl: { rejectUnauthorized: false } }
+        : {},
+  },
   plugins,
   modules,
-};
+}
