@@ -28,13 +28,13 @@ const ADMIN_CORS =
 // CORS to avoid issues when consuming Medusa from a client
 const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000,https://streampay.store";
 
-const DATABASE_TYPE = process.env.DATABASE_TYPE || "postgres";
-const DATABASE_URL = process.env.DATABASE_URL || "postgres://enonthqqzvbhvr:dfedf551af72fc1177752586756fdbc1550755872d6ee5c15fa6a68d2dfc4369@ec2-34-242-199-141.eu-west-1.compute.amazonaws.com:5432/d28br80p45qbge";
+const DATABASE_TYPE = process.env.DATABASE_TYPE || "sqlite";
+const DATABASE_URL = process.env.DATABASE_URL || "postgres://hunfzuexskynga:308bd31faf709282666344e67655c2dd39a98e44f08ce51986d94bcacd87614f@ec2-52-19-55-12.eu-west-1.compute.amazonaws.com:5432/d1dq3su9eah4o2";
 const REDIS_URL = process.env.REDIS_URL || "redis://default:JXxWvP1twsaS3LleLUubr48my3Ke2hBE7IX5cdvULQeTNsbrq8uCWjxQlzuYSda7@6qcck4.stackhero-network.com:6379";
 
 // Stripe keys
-const STRIPE_API_KEY = process.env.STRIPE_API_KEY || "pk_sk_live_51N5Q0DKjdN5iZkcXDshrrkFzap7WanNdN4UIcWlB7Ux2QdeGSAjqKUVfa2Z6mKFYkVO6Ey7WiuKAyszOsR1qLfjK00FuI172wM";
-const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "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";
+const STRIPE_API_KEY = process.env.STRIPE_API_KEY || "";
+const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "";
 
 const plugins = [
     `medusa-fulfillment-manual`,
@@ -73,9 +73,11 @@ const plugins = [
             from: process.env.SENDGRID_FROM,
             order_placed_template: process.env.SENDGRID_ORDER_PLACED_ID,
             localization: {
-                "en-EN": { // locale key
+                "es-ES": { // locale key
                     order_placed_template: process.env.SENDGRID_ORDER_PLACED_ID_LOCALIZED,
-          },
+                }
+            }
+        }
     },
     {
         resolve: `medusa-plugin-meilisearch`,
@@ -105,9 +107,12 @@ const plugins = [
                     transform: (product) => ({
                         id: product.id,
                         // other attributes...
-         },
+                    }),
+                },
+            },
+        },
     },
-    {
+];
 
 const modules = {
     eventBus: {
@@ -150,7 +155,9 @@ module.exports = {
         database_type: "postgres",
         store_cors: STORE_CORS,
         admin_cors: ADMIN_CORS,
-        database_extra: process.env.NODE_ENV !== "development" ? { ssl: { rejectUnauthorized: false } } : {},
+        database_extra: process.env.NODE_ENV !== "development" ?
+            { ssl: { rejectUnauthorized: false } } :
+            {},
     },
     plugins,
 }
