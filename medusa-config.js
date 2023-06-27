@@ -1,6 +1,6 @@
 const dotenv = require("dotenv");
 
-let ENV_FILE_NAME = ".env";
+let ENV_FILE_NAME = "";
 switch (process.env.NODE_ENV) {
     case "production":
         ENV_FILE_NAME = ".env.production";
@@ -23,14 +23,15 @@ try {
 
 // CORS when consuming Medusa from admin
 const ADMIN_CORS =
-    process.env.ADMIN_CORS || "http://localhost:7000,http://localhost:7001,https://admin.streampay.store";
+    process.env.ADMIN_CORS || "http://localhost:7000,http://localhost:7001";
 
 // CORS to avoid issues when consuming Medusa from a client
-const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000,https://streampay.store";
+const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000";
 
-const DATABASE_TYPE = process.env.DATABASE_TYPE || "postgres";
-const DATABASE_URL = process.env.DATABASE_URL || "postgres://hunfzuexskynga:308bd31faf709282666344e67655c2dd39a98e44f08ce51986d94bcacd87614f@ec2-52-19-55-12.eu-west-1.compute.amazonaws.com:5432/dfmvamqto7c7bq";
-const REDIS_URL = process.env.REDIS_URL || "redis://default:JXxWvP1twsaS3LleLUubr48my3Ke2hBE7IX5cdvULQeTNsbrq8uCWjxQlzuYSda7@6qcck4.stackhero-network.com:6379";
+const DATABASE_URL =
+    process.env.DATABASE_URL || "postgres://localhost/medusa-store";
+
+const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
 
 // Stripe keys
 const STRIPE_API_KEY = process.env.STRIPE_API_KEY || "pk_sk_live_51N5Q0DKjdN5iZkcXDshrrkFzap7WanNdN4UIcWlB7Ux2QdeGSAjqKUVfa2Z6mKFYkVO6Ey7WiuKAyszOsR1qLfjK00FuI172wM";
@@ -174,9 +175,7 @@ module.exports = {
         database_type: "postgres",
         store_cors: STORE_CORS,
         admin_cors: ADMIN_CORS,
-        database_extra: process.env.NODE_ENV !== "development" ?
-            { ssl: { rejectUnauthorized: false } } :
-            {},
+        database_extra: process.env.NODE_ENV !== "development" ? { ssl: { rejectUnauthorized: false } } : {},
     },
     plugins,
     modules,
