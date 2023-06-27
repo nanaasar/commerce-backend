@@ -23,109 +23,25 @@ try {
 
 // CORS when consuming Medusa from admin
 const ADMIN_CORS =
-    process.env.ADMIN_CORS || "http://localhost:7000,http://localhost:7001";
+    process.env.ADMIN_CORS || "http://localhost:7000,http://localhost:7001,https://admin.streampay.store";
 
 // CORS to avoid issues when consuming Medusa from a client
-const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000";
+const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000,https://streampay.store";
 
-const DATABASE_URL =
-    process.env.DATABASE_URL || "postgres://localhost/medusa-store";
-
-const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
+const DATABASE_TYPE = process.env.DATABASE_TYPE || "sqlite";
+const DATABASE_URL = process.env.DATABASE_URL || "postgres://hunfzuexskynga:308bd31faf709282666344e67655c2dd39a98e44f08ce51986d94bcacd87614f@ec2-52-19-55-12.eu-west-1.compute.amazonaws.com:5432/d1dq3su9eah4o2";
+const REDIS_URL = process.env.REDIS_URL || "redis://default:JXxWvP1twsaS3LleLUubr48my3Ke2hBE7IX5cdvULQeTNsbrq8uCWjxQlzuYSda7@6qcck4.stackhero-network.com:6379";
 
 // Stripe keys
-const STRIPE_API_KEY = process.env.STRIPE_API_KEY || "pk_sk_live_51N5Q0DKjdN5iZkcXDshrrkFzap7WanNdN4UIcWlB7Ux2QdeGSAjqKUVfa2Z6mKFYkVO6Ey7WiuKAyszOsR1qLfjK00FuI172wM";
-const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "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";
+const STRIPE_API_KEY = process.env.STRIPE_API_KEY || "";
+const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "";
 
 const plugins = [
-    "medusa-fulfillment-manual",
-    {
-        resolve: "medusa-file-s3",
-        options: {
-            s3_url: process.env.S3_URL,
-            bucket: process.env.S3_BUCKET,
-            region: "eu-north-1",
-            access_key_id: process.env.S3_ACCESS_KEY_ID,
-            secret_access_key: process.env.S3_SECRET_ACCESS_KEY,
-        },
-    },
-    {
-        resolve: "medusa-plugin-meilisearch",
-        options: {
-            config: {
-                host: process.env.MEILISEARCH_HOST,
-                apiKey: process.env.MEILISEARCH_API_KEY,
-            },
-            settings: {
-                products: {
-                    indexSettings: {
-                        searchableAttributes: ["title", "description", "variant_sku"],
-                        displayedAttributes: [
-                            "title",
-                            "description",
-                            "variant_sku",
-                            "thumbnail",
-                            "prices",
-                            "handle",
-                            "id",
-                        ],
-                    },
-                    primaryKey: "id",
-                    transformer: (product) => {
-                        const { id, title, description, thumbnail, handle } = product;
-                        const prices = {};
-
-                        product.variants[0].prices.forEach((price) => {
-                            prices[price.currency_code] = price.amount;
-                        });
-
-                        const categoriesArr = product ? .categories ? .map((categ) => categ.id);
-
-                        if (!prices || !id || Object.values(prices).length < 3) {
-                            return null;
-                        }
-
-                        console.log("Updated:", id, prices);
-
-                        return {
-                            id,
-                            prices,
-                            title,
-                            description,
-                            thumbnail,
-                            handle,
-                            categories: categoriesArr,
-                        };
-                    },
-                },
-            },
-        },
-    },
-    {
-        resolve: "medusa-plugin-segment",
-        options: {
-            write_key: process.env.SEGMENT_WRITE_KEY,
-        },
-    },
-    {
-        resolve: "medusa-payment-stripe",
-        options: {
-            api_key: process.env.STRIPE_API_KEY,
-            webhook_secret: process.env.STRIPE_WEBHOOK_SECRET,
-            capture: true,
-            automatic_payment_methods: true,
-        },
-    },
-    {
-        resolve: "medusa-plugin-sendgrid",
-        options: {
-            api_key: process.env.SENDGRID_API_KEY,
-            from: process.env.SENDGRID_FROM,
-            user_password_reset_template: "d-685a5cda106d4db9b11e77af3c0e6090",
-            customer_password_reset_template: "d-0ff7f800872c4caeadb250116b0ce3b9 ",
-            order_placed_template: "d-a0093ed5b002403ba5655c2535493490",
-        },
-    },
+    `medusa-fulfillment-manual`,
+    `medusa-payment-manual`,
+    // To enable the admin plugin, uncomment the following lines and run `yarn add @medusajs/admin`
+    // Please note is not recommended to build the admin in production, cause a minimum of 2GB RAM
+    // is required.
     {
         resolve: "@medusajs/admin",
         /** @type {import('@medusajs/admin').PluginOptions} */
@@ -134,22 +50,85 @@ const plugins = [
             path: "app",
         },
     },
+    {
+        resolve: `medusa-payment-stripe`,
+        options: {
+            api_key: STRIPE_API_KEY,
+            webhook_secret: STRIPE_WEBHOOK_SECRET,
+            automatic_payment_methods: true,
+        },
+    },
+    {
+        resolve: `medusa-file-minio`,
+        options: {
+            endpoint: process.env.MINIO_ENDPOINT,
+            bucket: process.env.MINIO_BUCKET,
+            access_key_id: process.env.MINIO_ACCESS_KEY,
+            secret_access_key: process.env.MINIO_SECRET_KEY,
+        },
+    },
+    {
+        resolve: `medusa-plugin-sendgrid`,
+        options: {
+            api_key: process.env.SENDGRID_API_KEY,
+            from: process.env.SENDGRID_FROM,
+            order_placed_template: process.env.SENDGRID_ORDER_PLACED_ID,
+            localization: {
+                "en-EN": { // locale key
+                    order_placed_template: process.env.SENDGRID_ORDER_PLACED_ID_LOCALIZED,
+                }
+            }
+        }
+    },
+    {
+        resolve: `medusa-plugin-meilisearch`,
+        options: {
+            config: {
+                host: process.env.MEILISEARCH_HOST,
+                apiKey: process.env.MEILISEARCH_API_KEY,
+            },
+            settings: {
+                // index name
+                products: {
+                    indexSettings: {
+                        searchableAttributes: [
+                            "title",
+                            "description",
+                            "variant_sku",
+                        ],
+                        displayedAttributes: [
+                            "title",
+                            "description",
+                            "variant_sku",
+                            "thumbnail",
+                            "handle",
+                        ],
+                    },
+                    primaryKey: "id",
+                    transform: (product) => ({
+                        id: product.id,
+                        // other attributes...
+                    }),
+                },
+            },
+        },
+    },
 ];
 
 const modules = {
     eventBus: {
         resolve: "@medusajs/event-bus-redis",
         options: {
-            redisUrl: REDIS_URL,
-        },
+            redisUrl: REDIS_URL
+        }
     },
     cacheService: {
         resolve: "@medusajs/cache-redis",
         options: {
-            redisUrl: REDIS_URL,
-        },
+            redisUrl: REDIS_URL
+        }
     },
-};
+}
 
 /** @type {import('@medusajs/medusa').ConfigModule["projectConfig"]} */
 const projectConfig = {
@@ -159,13 +138,15 @@ const projectConfig = {
     database_type: DATABASE_TYPE,
     store_cors: STORE_CORS,
     admin_cors: ADMIN_CORS,
-    redis_url: REDIS_URL,
-};
+    // Uncomment the following lines to enable REDIS
+    redis_url: REDIS_URL
+}
 
 if (DATABASE_URL && DATABASE_TYPE === "postgres") {
     projectConfig.database_url = DATABASE_URL;
     delete projectConfig["database_database"];
 }
+
 
 /** @type {import('@medusajs/medusa').ConfigModule} */
 module.exports = {
@@ -175,8 +156,9 @@ module.exports = {
         database_type: "postgres",
         store_cors: STORE_CORS,
         admin_cors: ADMIN_CORS,
-        database_extra: process.env.NODE_ENV !== "development" ? { ssl: { rejectUnauthorized: false } } : {},
+        database_extra: process.env.NODE_ENV !== "development" ?
+            { ssl: { rejectUnauthorized: false } } :
+            {},
     },
     plugins,
-    modules,
 }
