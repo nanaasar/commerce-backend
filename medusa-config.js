@@ -43,7 +43,7 @@ const plugins = [
         options: {
             s3_url: process.env.S3_URL,
             bucket: process.env.S3_BUCKET,
-            region: "ap-south-1",
+            region: "eu-north-1a",
             access_key_id: process.env.S3_ACCESS_KEY_ID,
             secret_access_key: process.env.S3_SECRET_ACCESS_KEY,
         },
