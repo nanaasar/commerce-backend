@@ -13,7 +13,7 @@
         "medusa"
     ],
     "scripts": {
-        "clean": "cross-env ./node_modules/.bin/rimraf dist",
+        "clean": "./node_modules/.bin/rimraf dist",
         "build": "babel src -d dist --extensions \".ts,.js\"",
         "serve": "medusa start",
         "watch": "tsc --watch",
