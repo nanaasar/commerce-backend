@@ -53,9 +53,11 @@ const plugins = [
     {
         resolve: `medusa-payment-stripe`,
         options: {
-            api_key: STRIPE_API_KEY,
-            webhook_secret: STRIPE_WEBHOOK_SECRET,
+            api_key: process.env.STRIPE_API_KEY,
+            webhook_secret: process.env.STRIPE_WEBHOOK_SECRET,
+            payment_description: "Order for local manufacturing and fabrication",
             automatic_payment_methods: true,
+            capture: true,
         },
     },
     {
