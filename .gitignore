@@ -16,11 +16,3 @@ package-lock.json
 yarn.lock
 medusa-db.sql
 build
-
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-node_modules
