@@ -1,34 +1,30 @@
 <p align="center">
-  <a href="https://www.medusajs.com">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/59018053/229103275-b5e482bb-4601-46e6-8142-244f531cebdb.svg">
-    <source media="(prefers-color-scheme: light)" srcset="https://user-images.githubusercontent.com/59018053/229103726-e5b529a3-9b3f-4970-8a1f-c6af37f087bf.svg">
-    <img alt="Medusa logo" src="https://user-images.githubusercontent.com/59018053/229103726-e5b529a3-9b3f-4970-8a1f-c6af37f087bf.svg">
-    </picture>
+  <a href="https://admin.streampay.store">
+    <img alt="StreamCommerce logo" src="https://i.imgur.com/3jUHsfu.png" width="100" />
   </a>
 </p>
 <h1 align="center">
-  Medusa
+ StreamCommerce Backend + Admin
 </h1>
-
-<h4 align="center">
-  <a href="https://docs.medusajs.com">Documentation</a> |
-  <a href="https://www.medusajs.com">Website</a>
-</h4>
-
 <p align="center">
-  Building blocks for digital commerce
+A headless commerce platform (Powered by Medusajs) is a type of e-commerce platform that separates the front-end presentation layer (also known as the "head") from the back-end e-commerce functionality. In a headless commerce platform, the front-end user interface can be built using any technology or framework, while the back-end e-commerce functionality, including product catalog, shopping cart, checkout, payments, and order management, is delivered through an API. The headless approach offers more flexibility and customization for online retailers to create unique and personalized experiences for their customers. By decoupling the front-end and back-end, businesses can easily adapt to new trends, implement new technologies, and integrate with third-party tools without having to completely rebuild their entire e-commerce platform. Some of the benefits of a headless commerce platform include faster time-to-market, reduced development costs, improved scalability, and increased agility. However, it may require more technical expertise to implement and maintain, and may not be suitable for all businesses depending on their specific needs and resources.
+<p align="center">
 </p>
 <p align="center">
-  <a href="https://github.com/medusajs/medusa/blob/master/CONTRIBUTING.md">
-    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" alt="PRs welcome!" />
+  <a href="https://github.com/stream-protocol/commerce-platform/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="StreamCommerce is released under the MIT license." />
   </a>
-    <a href="https://www.producthunt.com/posts/medusa"><img src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Day-%23DA552E" alt="Product Hunt"></a>
+  <a href="https://circleci.com/gh/medusajs/medusa">
+    <img src="https://circleci.com/gh/medusajs/medusa.svg?style=shield" alt="Current CircleCI build status." />
+  </a>
+  <a href="https://github.com/stream-protocol/commerce-platform/blob/master/CONTRIBUTING.md">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" alt="Welcome!" />
+  </a>
   <a href="https://discord.gg/xpCwq3Kfn8">
     <img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg" alt="Discord Chat" />
   </a>
-  <a href="https://twitter.com/intent/follow?screen_name=medusajs">
-    <img src="https://img.shields.io/twitter/follow/medusajs.svg?label=Follow%20@medusajs" alt="Follow @medusajs" />
+  <a href="https://twitter.com/intent/follow?screen_name=stream_protocol">
+    <img src="https://img.shields.io/twitter/follow/stream-protocol.svg?label=Follow%20@stream_protocol" alt="Follow @stream_protocol" />
   </a>
 </p>
 
