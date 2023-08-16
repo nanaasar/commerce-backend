@@ -28,14 +28,14 @@
 		"sqltools.connections": [
 			{
 				"previewLimit": 50,
-				"server": "ec2-52-5-167-89.compute-1.amazonaws.com",
+				"server": "ec2-18-202-8-133.eu-west-1.compute.amazonaws.com",
 				"port": 5432,
 				"driver": "PostgreSQL",
 				"name": "medusa-store",
 				"group": "medusa",
-				"database": "dfmvamqto7c7bq",
-				"username": "zvampqtevcrvys",
-				"password": "b7a32b813d1ff5c7088433098031c37209403d138d61ad6093bd94b80244212f"
+				"database": "d2fsgm84qcn8rc",
+				"username": "xguzpcbdyfmmrm",
+				"password": "c64a54087830d903c0267bd6d5472efa619079987de938cf729bbd91cc225e31"
 			}
 		]
 	}
