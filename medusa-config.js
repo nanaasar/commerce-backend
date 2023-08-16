@@ -29,12 +29,12 @@ const ADMIN_CORS =
 const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000,https://streampay.store";
 
 const DATABASE_TYPE = process.env.DATABASE_TYPE || "sqlite";
-const DATABASE_URL = process.env.DATABASE_URL || "postgres://hunfzuexskynga:308bd31faf709282666344e67655c2dd39a98e44f08ce51986d94bcacd87614f@ec2-52-19-55-12.eu-west-1.compute.amazonaws.com:5432/d1dq3su9eah4o2";
-const REDIS_URL = process.env.REDIS_URL || "redis://default:JXxWvP1twsaS3LleLUubr48my3Ke2hBE7IX5cdvULQeTNsbrq8uCWjxQlzuYSda7@6qcck4.stackhero-network.com:6379";
+const DATABASE_URL = process.env.DATABASE_URL || "postgres://xguzpcbdyfmmrm:c64a54087830d903c0267bd6d5472efa619079987de938cf729bbd91cc225e31@ec2-18-202-8-133.eu-west-1.compute.amazonaws.com:5432/d2fsgm84qcn8rc";
+const REDIS_URL = process.env.REDIS_URL || "redis://default:ORhjrjX5quu7c6q8KePih5LwpdVgpeCTw3UQkBNFQQEYZlkTvFcVVlZOVeaQhCXD@ki6zg7.stackhero-network.com:6379";
 
 // Stripe keys
-const STRIPE_API_KEY = process.env.STRIPE_API_KEY || "";
-const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "";
+const STRIPE_API_KEY = process.env.STRIPE_API_KEY || "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";
+const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET || "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";
 
 const plugins = [
     `medusa-fulfillment-manual`,
@@ -164,4 +164,3 @@ module.exports = {
     },
     plugins,
 }
-
